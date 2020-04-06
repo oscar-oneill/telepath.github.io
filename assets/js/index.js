@@ -12,7 +12,6 @@ searchForm.addEventListener('submit', e => {
     const limit = document.getElementById("limit").value //limit post return
     let proxy = "https://cors-anywhere.herokuapp.com/"; //proxy
 
-    // searchInput.value = ''; // clears value/text in search bar
     welcome.innerHTML = '';
     imageList.innerHTML = ''; // resets (not reloads) page when new search is executed
     console.clear(); // clears console when new search is executed
@@ -30,15 +29,12 @@ searchForm.addEventListener('submit', e => {
             current.innerHTML = ` You are currently viewing ${parsedSub}`;
 
             // Posts from gfycat
-            if (domain == "gfycat.com") {
-
-                let slicedGIF = postUrl.slice(8);
-
-                let gfycatObject = {
-                gfycatVideo: `${proxy}https://thumbs.${slicedGIF}-mobile.mp4`,
+        if (domain == "gfycat.com") { 
+            let gfycatObject = {
+                gfycatVideo: redditPosts[i].preview.reddit_video_preview.fallback_url,
                 gfycatTitle: redditPosts[i].title,
                 gfycatSub: redditPosts[i].subreddit_name_prefixed,
-                gfycatUps: redditPosts[i].ups,
+                gfycatUps: redditPosts[i].ups, 
                 gfycatAuthor: redditPosts[i].author,
                 gfycatDomain: redditPosts[i].domain,
             }
@@ -46,6 +42,7 @@ searchForm.addEventListener('submit', e => {
             imageList.innerHTML += addNewImageGfycat(gfycatObject);
             console.log(gfycatObject);
         } 
+
 
             // Posts hosted by v.redd.it
         if (domain == "v.redd.it") {
