@@ -10,7 +10,6 @@ searchForm.addEventListener('submit', e => {
     const reddit = searchInput.value; // search subreddit
     const sortType = document.getElementById("sort-type").value //sort posts
     const limit = document.getElementById("limit").value //limit post return
-    let proxy = "https://cors-anywhere.herokuapp.com/"; //proxy
 
     welcome.innerHTML = '';
     imageList.innerHTML = ''; // resets (not reloads) page when new search is executed
@@ -18,43 +17,121 @@ searchForm.addEventListener('submit', e => {
 
     e.preventDefault(); // prevents form from submitting
 
-    redditParse.search(reddit, sortType, limit, proxy).then(query => {
+    redditParse.search(reddit, sortType, limit).then(query => {
         let redditPosts = query, i;
         for (i = 0; i < redditPosts.length; i++) {
             
             let domain = redditPosts[i].domain;
             let parsedSub = redditPosts[i].subreddit_name_prefixed;
             let postUrl = redditPosts[i].url;
-            
-            current.innerHTML = ` You are currently viewing ${parsedSub}`;
+            let title = redditPosts[i].title;
+            let upvotes = redditPosts[i].ups;
+            let author = redditPosts[i].author;
 
-            // Posts from gfycat
-        if (domain == "gfycat.com") { 
-            let gfycatObject = {
-                gfycatVideo: redditPosts[i].preview.reddit_video_preview.fallback_url,
-                gfycatTitle: redditPosts[i].title,
-                gfycatSub: redditPosts[i].subreddit_name_prefixed,
-                gfycatUps: redditPosts[i].ups, 
-                gfycatAuthor: redditPosts[i].author,
-                gfycatDomain: redditPosts[i].domain,
+            current.innerHTML = `You are currently viewing ${parsedSub}`;
+
+            // Posts from gfycat with typical url
+        if (domain == "gfycat.com") {
+            let slicedGfycat = postUrl.slice(19);
+            async function getGfycatVideo() {
+                const gfycatData = await fetch(`https://api.gfycat.com/v1/gfycats/${slicedGfycat}`);
+                const data = await gfycatData.json();
+
+                let i = 0;
+                let gfycatUrl = data.gfyItem.miniUrl;
+                
+                let gfycatObject = {
+                    gfycatVideo: gfycatUrl,
+                    gfycatTitle: title,
+                    gfycatSub: parsedSub,
+                    gfycatUps: upvotes,
+                    gfycatAuthor: author,
+                    gfycatDomain: domain,
+                }
+
+                imageList.innerHTML += addNewImageGfycat(gfycatObject)
+                console.log(gfycatObject);
             }
-
-            imageList.innerHTML += addNewImageGfycat(gfycatObject);
-            console.log(gfycatObject);
+            getGfycatVideo();
         } 
 
+            // Posts from gfycat with alternate url
+        if (domain == "gfycat.com" && postUrl.includes("gifs/detail/")) {
+            let newGfycatID = postUrl.slice(31);
+            async function getGfycatVideoTwo() {
+                const gfycatData = await fetch(`https://api.gfycat.com/v1/gfycats/${newGfycatID}`);
+                const data = await gfycatData.json();
 
-            // Posts hosted by v.redd.it
-        if (domain == "v.redd.it") {
+                let i = 0;
+                let gfycatUrlTwo = data.gfyItem.miniUrl;
+
+                let gfycatObjectTwo = {
+                    gfycatVideoTwo: gfycatUrlTwo,
+                    gfycatTitleTwo: title,
+                    gfycatSubTwo: parsedSub,
+                    gfycatUpsTwo: upvotes,
+                    gfycatAuthorTwo: author,
+                    gfycatDomainTwo: domain,
+                }
+
+                imageList.innerHTML += addNewImageGfycatTwo(gfycatObjectTwo)
+                console.log(gfycatObjectTwo);
+            }
+            getGfycatVideoTwo();
+        }
+
+            // Posts from gfycat that includes hyphens in url
+        if (domain == "gfycat.com" && postUrl.includes("-")) {
+            let newGfycatID = postUrl.slice(19);
+            let search = "-";
+            let indexOf = newGfycatID.indexOf(search);
+            let length = newGfycatID.length
+            let remainder = indexOf - length;
+            let newSlice = newGfycatID.slice(0, `${remainder}`);
+            async function getGfycatVideoThree() {
+                const gfycatData = await fetch(`https://api.gfycat.com/v1/gfycats/${newSlice}`);
+                const data = await gfycatData.json();
+
+                let i = 0;
+                let gfycatUrlThree = data.gfyItem.miniUrl;
+
+                let gfycatObjectThree = {
+                    gfycatVideoThree: gfycatUrlThree,
+                    gfycatTitleThree: title,
+                    gfycatSubThree: parsedSub,
+                    gfycatUpsThree: upvotes,
+                    gfycatAuthorThree: author,
+                    gfycatDomainThree: domain,
+                }
+
+                imageList.innerHTML += addNewImageGfycatThree(gfycatObjectThree)
+                console.log(gfycatObjectThree);
+            }
+            getGfycatVideoThree();
+        }
+
+            // Posts hosted by v.redd.it and posts hosted by v.redd.it that have been crossposted
+        if (domain == "v.redd.it" && "crosspost_parent_list" in redditPosts[i]) {
+            let vredditCrossObj = {
+                vredditCrossVideo: redditPosts[i].crosspost_parent_list[0].secure_media.reddit_video.fallback_url,
+                vredditCrossTitle: redditPosts[i].crosspost_parent_list[0].title,
+                vredditCrossSub: redditPosts[i].crosspost_parent_list[0].subreddit_name_prefixed,
+                vredditCrossUps: redditPosts[i].ups,
+                vredditCrossAuthor: redditPosts[i].author,
+                vredditCrossDomain: redditPosts[i].domain
+            }
+            imageList.innerHTML += addNewImageVredditX(vredditCrossObj)
+            console.log(vredditCrossObj);
+
+        } else if (domain == "v.redd.it") {
             let vredditObject = {
                 vredditVideo: redditPosts[i].secure_media.reddit_video.fallback_url,
                 vredditTitle: redditPosts[i].title,
                 vredditSub: redditPosts[i].subreddit_name_prefixed,
-                vredditUps: redditPosts[i].ups, 
-                vredditAuthor: redditPosts[i].author, 
+                vredditUps: redditPosts[i].ups,
+                vredditAuthor: redditPosts[i].author,
                 vredditDomain: redditPosts[i].domain,
             }
-
             imageList.innerHTML += addNewImageVreddit(vredditObject);
             console.log(vredditObject);
         }
@@ -69,7 +146,6 @@ searchForm.addEventListener('submit', e => {
                 imgurAuthor: redditPosts[i].author,
                 imgurDomain: redditPosts[i].domain, 
             }
-
             imageList.innerHTML += addNewImageImgur(imgurObject);
             console.log(imgurObject);
         }
@@ -84,7 +160,6 @@ searchForm.addEventListener('submit', e => {
                 iredditAuthor: redditPosts[i].author,
                 iredditDomain: redditPosts[i].domain,
             }
-
             imageList.innerHTML += addNewImageIreddit(iredditObject);
             console.log(iredditObject);
         }
@@ -104,6 +179,32 @@ searchForm.addEventListener('submit', e => {
 		        `;
             }
 
+        function addNewImageGfycatTwo(gfycatObjectTwo) {
+            return `
+                    <div class="post-header">
+                        <p class="title">${gfycatObjectTwo.gfycatTitleTwo}</p>
+						<p class="video-items" class="subreddit">posted to ${gfycatObjectTwo.gfycatSubTwo} by u/${gfycatObjectTwo.gfycatAuthorTwo} - ${gfycatObjectTwo.gfycatDomainTwo}</p>
+						<p class="video-items" class="upvotes">❤︎ ${gfycatObjectTwo.gfycatUpsTwo} likes</p>
+                    </div>
+                    <div class="video-box">
+                        <video src="${gfycatObjectTwo.gfycatVideoTwo}" preload muted autoplay loop></video>
+                    </div>
+		        `;
+        }
+
+        function addNewImageGfycatThree(gfycatObjectThree) {
+            return `
+                    <div class="post-header">
+                        <p class="title">${gfycatObjectThree.gfycatTitleThree}</p>
+						<p class="video-items" class="subreddit">posted to ${gfycatObjectThree.gfycatSubThree} by u/${gfycatObjectThree.gfycatAuthorThree} - ${gfycatObjectThree.gfycatDomainThree}</p>
+						<p class="video-items" class="upvotes">❤︎ ${gfycatObjectThree.gfycatUpsThree} likes</p>
+                    </div>
+                    <div class="video-box">
+                        <video src="${gfycatObjectThree.gfycatVideoThree}" preload muted autoplay loop></video>
+                    </div>
+		        `;
+        }
+
         function addNewImageVreddit(vredditObject) {
             return `
                     <div class="post-header">
@@ -116,6 +217,19 @@ searchForm.addEventListener('submit', e => {
                     </div>
 		        `;
             }
+
+        function addNewImageVredditX(vredditCrossObj) {
+            return `
+                    <div class="post-header">
+                        <p class="title">${vredditCrossObj.vredditCrossTitle}</p>
+						<p class="video-items" class="subreddit">crossposted from ${vredditCrossObj.vredditCrossSub} by u/${vredditCrossObj.vredditCrossAuthor} - ${vredditCrossObj.vredditCrossDomain}</p>
+						<p class="video-items" class="upvotes">❤︎ ${vredditCrossObj.vredditCrossUps} likes</p>
+                    </div>
+                    <div class="video-box">
+                        <video src="${vredditCrossObj.vredditCrossVideo}" preload muted autoplay loop></video>
+                    </div>
+		        `;
+        }
 
         function addNewImageImgur(imgurObject) {
                 return `
