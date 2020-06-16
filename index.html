@@ -4,19 +4,19 @@
 		<title>Telepath for Reddit</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	    <meta name="description" content="Demo project">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" href="./assets/css/telepath.css">
-		
-		<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
+		<link rel="stylesheet" href="./assets/css/style.css">
+		<link rel="stylesheet" href="./assets/css/dark-mode.css">
+		<link rel="icon" href="./assets/images/icons/favicon.png" type="image/png" sizes="48x48">
 	</head>
 	<body>
 		<div id="nav-bar">
-			<a href="./index.html"><span id="site-title">Telepath for</span></a>
+			<a href="./index.html">
+				<span id="site-title">Telepath</span>
+				<img id="reddit-icon" src="./assets/images/icons/reddit-logo.png"></img>
+			</a>
 			
-			<img id="reddit" src="./assets/images/Reddit_Lockup_OnDark.png"></img>
-
 			<div id="prefix">r/</div>
 
 			<form id="search-form">
@@ -32,25 +32,29 @@
 
 				<select name="limit" id="limit">
 					<option value="5">5</option>
-					<option selected value="10">10</option>
-					<option value="25">25</option>
+					<option value="10">10</option>
+					<option selected value="25">25</option>
 					<option value="40">40</option>
 					<option value="100">100</option>
 				</select>
-				<button type="submit" id="submit">Search</button>
-
-				<div id="subreddit"></div>
+				<button type="submit" id="submit">Go</button>
 			</form>
+
 		</div>
-		<div class="media"></div>
 		
 		<div id="welcome">
 			<span id="welcome-text">
 				Welcome to Telepath! <br>
-				Telepath is an alternative way to experience reddit. <br>
-				Enter a subreddit to begin viewing videos and gifs!
+				Telepath is an alternative reddit experience. <br>
+				Enter a subreddit to view videos and gifs! <br>
+				<br>
+
+				<h6>Alpha Version</h6>
 			</span>
 		</div>
+
+		<div class="media"></div>
+		<div class="info-box"></div>
 
 		<script type="module" src="./assets/js/index.js"></script>
 	</body>

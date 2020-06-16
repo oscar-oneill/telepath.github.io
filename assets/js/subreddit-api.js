@@ -1,5 +1,5 @@
 export default {
-  search: function(reddit, sortType, limit) {
+  search: (reddit, sortType, limit) => {
     return fetch(
       `https://api.reddit.com/r/${reddit}/${sortType}.json?limit=${limit}`
     )
