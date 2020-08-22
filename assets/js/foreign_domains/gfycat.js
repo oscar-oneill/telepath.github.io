@@ -1,11 +1,18 @@
-export default async function gfycatPosts(domain, parsedSub, postUrl, title, upvotes, author, convertedDate, flair, poster) {
-    let imageList = document.querySelector('.media');
+export default async function gfycatPosts(domain, parsedSub, postUrl, title, upvotes, author, convertedDate, flair, media, reddit) {
+    let imageList = document.querySelector('.objects');
     
     if (domain == "gfycat.com") {
         let gfycatID = postUrl.slice(19);
         async function getGfycatVideo() {
             const gfycatData = await fetch(`https://api.gfycat.com/v1/gfycats/${gfycatID}`);
             const data = await gfycatData.json();
+
+            const response = await fetch(`https://api.reddit.com/r/${reddit}/about`);
+            const _data = await response.json();
+
+            let icon = _data.data.header_img ? _data.data.header_img : _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
+
+
 
             if (data.errorMessage || data.message) {
                 let newRedgifsID = postUrl.slice(19);
@@ -14,22 +21,24 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
             }
 
             let i = 0;
-            let dynamicUrl = data.errorMessage || data.message ? redData.gfyItem.webmUrl : data.gfyItem.webmUrl ? data.gfyItem.webmUrl : 'https://st4.depositphotos.com/9625262/26433/v/600/depositphotos_264332102-stock-video-not-found-glitch-effect-text.jpg';
+            let dynamicUrl = data.errorMessage || data.message ? redData.gfyItem.mp4Url : data.gfyItem.mp4Url ? data.gfyItem.mp4Url : 'https://st4.depositphotos.com/9625262/26433/v/600/depositphotos_264332102-stock-video-not-found-glitch-effect-text.jpg';
             let postFlair = flair ? flair : "";
 
-            let gfycatObject = {
-                gfycatVideo: dynamicUrl,
-                gfycatTitle: title,
-                gfycatSub: parsedSub,
-                gfycatUps: upvotes,
-                gfycatAuthor: author,
-                gfycatDomain: domain,
-                gfycatDate: convertedDate,
-                gfycatFlair: postFlair,
-                poster: poster
+            let gfycat = {
+                video: dynamicUrl,
+                title: title,
+                sub: parsedSub,
+                ups: upvotes,
+                author: author,
+                domain: domain,
+                date: convertedDate,
+                flair: postFlair,
+                poster: media.preview.images[0].source.url,
+                icon: icon,
+                link: "https://www.reddit.com" + media.permalink
             }
 
-            imageList.innerHTML += addNewImageGfycat(gfycatObject);
+            imageList.innerHTML += gfycatImage(gfycat);
             
         }
         getGfycatVideo();
@@ -42,6 +51,13 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
             const gfycatData = await fetch(`https://api.gfycat.com/v1/gfycats/${gfycatID}`);
             const data = await gfycatData.json();
 
+            const response = await fetch(`https://api.reddit.com/r/${reddit}/about`);
+            const _data = await response.json();
+
+            let icon = _data.data.header_img ? _data.data.header_img : _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
+
+
+
             if (data.errorMessage || data.message) {
                 let newRedgifsID = gfycatID.slice(31);
                 var redgifsData = await fetch(`https://api.redgifs.com/v1/gfycats/${newRedgifsID}`);
@@ -49,22 +65,24 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
             }
 
             let i = 0;
-            let dynamicUrl = data.errorMessage || data.message ? redData.gfyItem.webmUrl : data.gfyItem.webmUrl ? data.gfyItem.webmUrl : 'https://st4.depositphotos.com/9625262/26433/v/600/depositphotos_264332102-stock-video-not-found-glitch-effect-text.jpg';
+            let dynamicUrl = data.errorMessage || data.message ? redData.gfyItem.mp4Url : data.gfyItem.mp4Url ? data.gfyItem.mp4Url : 'https://st4.depositphotos.com/9625262/26433/v/600/depositphotos_264332102-stock-video-not-found-glitch-effect-text.jpg';
             let postFlair = flair ? flair : "";
 
-            let gfycatObject = {
-                gfycatVideo: dynamicUrl,
-                gfycatTitle: title,
-                gfycatSub: parsedSub,
-                gfycatUps: upvotes,
-                gfycatAuthor: author,
-                gfycatDomain: domain,
-                gfycatDate: convertedDate,
-                gfycatFlair: postFlair,
-                poster: poster
+            let gfycat = {
+                video: dynamicUrl,
+                title: title,
+                sub: parsedSub,
+                ups: upvotes,
+                author: author,
+                domain: domain,
+                date: convertedDate,
+                flair: postFlair,
+                poster: media.preview.images[0].source.url,
+                icon: icon,
+                link: "https://www.reddit.com" + media.permalink
             }
 
-            imageList.innerHTML += addNewImageGfycat(gfycatObject);
+            imageList.innerHTML += gfycatImage(gfycat);
 
         }
         getGfycatVideo();
@@ -83,6 +101,13 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
             const gfycatData = await fetch(`https://api.gfycat.com/v1/gfycats/${gfycatID}`);
             const data = await gfycatData.json();
 
+            const response = await fetch(`https://api.reddit.com/r/${reddit}/about`);
+            const _data = await response.json();
+
+            let icon = _data.data.header_img ? _data.data.header_img : _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
+
+
+
             if (data.errorMessage || data.message) {
                 let newRedgifsID = postUrl.slice(19);
                 var redgifsData = await fetch(`https://api.redgifs.com/v1/gfycats/${newRedgifsID}`);
@@ -90,40 +115,59 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
             }
 
             let i = 0;
-            let dynamicUrl = data.errorMessage || data.message ? redData.gfyItem.webmUrl : data.gfyItem.webmUrl ? data.gfyItem.webmUrl : 'https://st4.depositphotos.com/9625262/26433/v/600/depositphotos_264332102-stock-video-not-found-glitch-effect-text.jpg';
+            let dynamicUrl = data.errorMessage || data.message ? redData.gfyItem.mp4Url : data.gfyItem.mp4Url ? data.gfyItem.mp4Url : 'https://st4.depositphotos.com/9625262/26433/v/600/depositphotos_264332102-stock-video-not-found-glitch-effect-text.jpg';
             let postFlair = flair ? flair : "";
 
-            let gfycatObject = {
-                gfycatVideo: dynamicUrl,
-                gfycatTitle: title,
-                gfycatSub: parsedSub,
-                gfycatUps: upvotes,
-                gfycatAuthor: author,
-                gfycatDomain: domain,
-                gfycatDate: convertedDate,
-                gfycatFlair: postFlair,
-                poster: poster
+            let gfycat = {
+                video: dynamicUrl,
+                title: title,
+                sub: parsedSub,
+                ups: upvotes,
+                author: author,
+                domain: domain,
+                date: convertedDate,
+                flair: postFlair,
+                poster: media.preview.images[0].source.url,
+                icon: icon,
+                link: "https://www.reddit.com" + media.permalink
             }
 
-            imageList.innerHTML += addNewImageGfycat(gfycatObject);
+            imageList.innerHTML += gfycatImage(gfycat);
         
         }
         getGfycatVideo();
     }
 
-    function addNewImageGfycat(gfycatObject) {
+    function gfycatImage(gfycat) {
         return `
-                    <div class="post-header">
-                        <p class="title">${gfycatObject.gfycatTitle} <span class="flair">${gfycatObject.gfycatFlair}</span></p>
-						<p class="video-items">posted to <span class="subreddit">${gfycatObject.gfycatSub}</span> on <span>${gfycatObject.gfycatDate}</span> by u/${gfycatObject.gfycatAuthor} - ${gfycatObject.gfycatDomain}</p>
-						<p class="video-items" class="upvotes"><span class="like">❤︎</span> ${gfycatObject.gfycatUps} upvotes</p>
+                <div class="container">
+                    <div class="identifier">
+                        <div class="subreddit_img">
+                            <img class="icon" src="${gfycat.icon}">
+                        </div>
+                        <div class="nameplate">
+                            <span>${gfycat.sub}</span>
+                        </div>
                     </div>
-                    <div class="video-box">
-                        <video controls preload="metadata" muted poster="${gfycatObject.poster}">
-                            <source src="${gfycatObject.gfycatVideo}#t=0.05" type="video/mp4">
+                    <div class="media_box">
+                        <video class="media" preload="none" controls muted poster="${gfycat.poster}">
+                             <source src="${gfycat.video}" type="video/mp4">
                         </video>
                     </div>
-		        `;
+                    <div class="activity">
+                        <i class="fas fa-heart like_btn"></i> <span class="likes">${gfycat.ups} Likes</span><br>
+                        <div class="data_box">
+                            <span class="user">u/${gfycat.author}</span> 
+                            <span class="post_title">${gfycat.title}</span>
+                        </div>
+                        <div class="date_box">
+                            <span class="date">${gfycat.date}</span> &#183; 
+                            <span class="domain">${gfycat.domain}</span> &#183;
+                            <a class="link" href="${gfycat.link}" target="_blank">Permalink</a>
+                        </div>
+                    </div>
+                </div>      
+                `;
     }
 }
 

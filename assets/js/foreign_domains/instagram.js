@@ -1,9 +1,16 @@
-export default async function instagramPosts(domain, parsedSub, postUrl, title, upvotes, author, convertedDate, flair){
-    let imageList = document.querySelector('.media');
+export default async function instagramPosts(domain, parsedSub, postUrl, title, upvotes, author, convertedDate, flair, reddit, media){
+    let imageList = document.querySelector('.objects');
+
     if (domain == 'instagram.com') {
         async function getInstagramData() {
             let instagramURL = postUrl;
-            console.log(instagramURL);
+
+            const response = await fetch(`https://api.reddit.com/r/${reddit.subreddit}/about`);
+            const _data = await response.json();
+
+            console.log(_data);
+
+            let icon = _data.data.header_img ? _data.data.header_img : _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
 
             if (instagramURL.length > 40) {
                 var newUrl = instagramURL.slice(0, 40);
@@ -11,42 +18,73 @@ export default async function instagramPosts(domain, parsedSub, postUrl, title, 
                 var instagramData = await fetch(`${newUrl}?__a=1`);
                 var data = await instagramData.json();
 
+                console.log(data);
+
             } else {
                 var instagramData = await fetch(`${instagramURL}?__a=1`);
                 var data = await instagramData.json();
-            }
-           
 
+                console.log(data);
+            }
+        
             let video = data.graphql.shortcode_media.video_url;
+            let poster = data.graphql.shortcode_media.thumbnail_src;
             let postFlair = flair ? flair : "";
 
-            let instagramObject = {
-                instagramTitle: title,
-                instagramSub: parsedSub,
-                instagramAuthor: author,
-                instagramUps: upvotes,
-                instagramVideo: video,
-                instagramDomain: domain,
-                instagramDate: convertedDate,
-                instagramFlair: postFlair
+            let instagram = {
+                title: title,
+                sub: parsedSub,
+                author: author,
+                ups: upvotes,
+                video: video,
+                domain: domain,
+                date: convertedDate,
+                flair: postFlair,
+                poster: poster,
+                icon: icon,
+                link: "https://www.reddit.com" + media.permalink
             }
 
-            imageList.innerHTML += addNewImageInstagram(instagramObject);
+            imageList.innerHTML += instagramImage(instagram);
+            console.log(instagram)
 
         }
         getInstagramData();
     } 
 
-    function addNewImageInstagram(instagramObject) {
-    return `
-            <div class="post-header">
-                <p class="title">${instagramObject.instagramTitle} <span class="flair">${instagramObject.instagramFlair}</span></p>
-                <p class="video-items">posted to <span class="subreddit">${instagramObject.instagramSub}</span> on <span>${instagramObject.instagramDate}</span> by u/${instagramObject.instagramAuthor} - ${instagramObject.instagramDomain}</p>
-                <p class="video-items" class="upvotes"><span class="like">❤︎</span> ${instagramObject.instagramUps} upvotes</p>
-            </div>
-            <div class="video-box">
-                <video controls preload="metadata" muted src="${instagramObject.instagramVideo}#t=0.05"></video>
-            </div>
-        `;
+    function instagramImage(instagram) {
+        return `
+                <div class="container">
+                    <div class="identifier">
+                        <div class="subreddit_img">
+                            <img class="icon" src="${instagram.icon}">
+                        </div>
+                        <div class="nameplate">
+                            <span>${instagram.sub}</span>
+                        </div>
+                    </div>
+                    <div class="media_box">
+                        <video class="media" preload="none" controls poster="${instagram.poster}">
+                             <source src="${instagram.video}" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="activity">
+                        <i class="fas fa-heart like_btn"></i> <span class="likes">${instagram.ups} Likes</span> <br>
+                        <div class="data_box">
+                            <span class="user">u/${instagram.author}</span> 
+                            <span class="post_title">${instagram.title}</span>
+                        </div>
+                        <div class="date_box">
+                            <span class="date">${instagram.date}</span> 
+                            &#183; 
+                            <span class="domain">${instagram.domain}</span>
+                            &#183;
+                            <a class="link" href="${instagram.link}" target="_blank">Permalink</a>
+                        </div>
+                    </div>
+                </div>      
+                    `;
 }
 }
+
+instagramPosts();

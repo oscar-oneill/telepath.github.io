@@ -7,53 +7,40 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
 		<link rel="stylesheet" href="./assets/css/style.css">
-		<link rel="stylesheet" href="./assets/css/dark-mode.css">
 		<link rel="icon" href="./assets/images/icons/favicon.png" type="image/png" sizes="48x48">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 	</head>
 	<body>
-		<div id="nav-bar">
+		<div class="nav_bar">
 			<a href="./index.html">
-				<span id="site-title">Telepath</span>
-				<img id="reddit-icon" src="./assets/images/icons/reddit-logo.png"></img>
+				<span class="site_title">Telepath</span>
+				<img class="icon" src="./assets/images/icons/reddit-logo.png"></img>
 			</a>
 			
-			<div id="prefix">r/</div>
+			<div class="prefix">r/</div>
 
-			<form id="search-form">
-				<input type="text" id="search-input" placeholder="subreddit search" value="">
+			<form class="search_form">
+				<input type="text" class="search_input" placeholder="subreddit search" value="">
 
-				<select name="type" id="sort-type">
-					<option value="top">Top</option>
-					<option selected value="new">New</option>
-					<option value="hot">Hot</option>
+				<select name="type" class="sort_type">
+					<option value="new">New</option>
+					<option selected value="hot">Hot</option>
 					<option value="rising">Rising</option>
-					<option value="controversial">Controversial</option>
 				</select>
 
-				<select name="limit" id="limit">
+				<select name="limit" class="limit">
 					<option value="5">5</option>
 					<option value="10">10</option>
 					<option selected value="25">25</option>
 					<option value="40">40</option>
 					<option value="100">100</option>
 				</select>
-				<button type="submit" id="submit">Go</button>
+				<button type="submit" id="submit">Search</button>
 			</form>
 
 		</div>
-		
-		<div id="welcome">
-			<span id="welcome-text">
-				Welcome to Telepath! <br>
-				Telepath is an alternative reddit experience. <br>
-				Enter a subreddit to view videos and gifs! <br>
-				<br>
 
-				<h6>Alpha Version</h6>
-			</span>
-		</div>
-
-		<div class="media"></div>
+		<div class="objects"></div>
 		<div class="info-box"></div>
 
 		<script type="module" src="./assets/js/index.js"></script>
