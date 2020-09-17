@@ -105,8 +105,6 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
             const _data = await response.json();
 
             let icon = _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : _data.data.header_img ? _data.data.header_img : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
-            let nsfw = _data.data.over18 == true ? 'https://alanma11.files.wordpress.com/2014/12/1ly1h6i.png' : "";
-
 
             if (data.errorMessage || data.message) {
                 let newRedgifsID = postUrl.slice(19);
@@ -129,7 +127,6 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
                 flair: postFlair,
                 poster: media.preview.images[0].source.url,
                 icon: icon,
-                nsfw: nsfw,
                 link: "https://www.reddit.com" + media.permalink
             }
 
@@ -147,7 +144,7 @@ export default async function gfycatPosts(domain, parsedSub, postUrl, title, upv
                             <img class="subreddit_icon" src="${gfycat.icon}" alt="subreddit icon">
                         </div>
                         <div class="nameplate">
-                            <span>${gfycat.sub}</span> <img id="nsfw" src="${gfycat.nsfw}" alt="nsfw">
+                            <span>${gfycat.sub}</span>
                         </div>
                     </div>
                     <div class="media_box">

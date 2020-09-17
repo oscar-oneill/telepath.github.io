@@ -14,7 +14,6 @@ export default async function streamablePosts(domain, parsedSub, postUrl, title,
                 let video = data.files.mp4.url;
                 let poster = data.thumbnail_url;
                 let icon = _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : _data.data.header_img ? _data.data.header_img : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
-                let nsfw = _data.data.over18 == true ? 'https://alanma11.files.wordpress.com/2014/12/1ly1h6i.png' : "";
                 
                 let postFlair = flair ? flair : "";
 
@@ -29,7 +28,6 @@ export default async function streamablePosts(domain, parsedSub, postUrl, title,
                     flair: postFlair,
                     poster: poster,
                     icon: icon,
-                    nsfw: nsfw,
                     link: "https://www.reddit.com" + media.permalink
                 }
 
@@ -46,7 +44,7 @@ export default async function streamablePosts(domain, parsedSub, postUrl, title,
                             <img class="subreddit_icon" src="${streamable.icon}" alt="subreddit icon">
                         </div>
                         <div class="nameplate">
-                            <span>${streamable.sub}</span> <img id="nsfw" src="${streamable.nsfw}" alt="nsfw">
+                            <span>${streamable.sub}</span>
                         </div>
                     </div>
                     <div class="media_box">
