@@ -38,7 +38,6 @@ export default async function redgifsPosts(domain, parsedSub, postUrl, title, up
                     flair: postFlair,
                     poster: media.preview.images[0].source.url,
                     icon: icon, 
-                    nsfw: nsfw,
                     link: "https://www.reddit.com" + media.permalink
 
                 }
