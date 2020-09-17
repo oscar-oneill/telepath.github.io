@@ -4,10 +4,11 @@ export default async function vredditPosts(redditPosts, domain, parsedSub, title
     if (domain == "v.redd.it" && "crosspost_parent_list" in redditPosts) {
         async function getVredditVideo() {
             const response = await fetch(`https://api.reddit.com/r/${reddit}/about`);
-            const data = await response.json();
+            const _data = await response.json();
 
-            let icon = data.data.header_img ? data.data.header_img : data.data.icon_img ? data.data.icon_img : data.data.community_icon ? data.data.community_icon : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
-
+            let icon = _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : _data.data.header_img ? _data.data.header_img : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
+            let nsfw = _data.data.over18 == true ? 'https://alanma11.files.wordpress.com/2014/12/1ly1h6i.png' : "";
+            
             let postFlair = flair ? flair : "";
             let vreddit = {
                 post: 'crosspost',
@@ -21,11 +22,11 @@ export default async function vredditPosts(redditPosts, domain, parsedSub, title
                 flair: postFlair,
                 poster: media.preview.images[0].source.url,
                 icon: icon,
+                nsfw: nsfw,
                 link: "https://www.reddit.com" + media.permalink
             }; 
 
             imageList.innerHTML += vredditImage(vreddit);
-            console.log(reddit);
         }
 
         getVredditVideo()
@@ -34,9 +35,10 @@ export default async function vredditPosts(redditPosts, domain, parsedSub, title
     else if (domain == "v.redd.it") {
         async function getVredditVideo() {
             const response = await fetch(`https://api.reddit.com/r/${reddit}/about`);
-            const data = await response.json();
+            const _data = await response.json();
 
-            let icon = data.data.header_img ? data.data.header_img : data.data.icon_img ? data.data.icon_img : data.data.community_icon ? data.data.community_icon : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
+            let icon = _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : _data.data.header_img ? _data.data.header_img : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
+            let nsfw = _data.data.over18 == true ? 'https://alanma11.files.wordpress.com/2014/12/1ly1h6i.png' : "";
 
             let postFlair = flair ? flair : "";
             let vreddit = {
@@ -51,11 +53,11 @@ export default async function vredditPosts(redditPosts, domain, parsedSub, title
                 flair: postFlair,
                 poster: media.preview.images[0].source.url,
                 icon: icon,
+                nsfw: nsfw,
                 link: "https://www.reddit.com" + media.permalink
             };
 
             imageList.innerHTML += vredditImage(vreddit);
-            console.log(vreddit);
         }
 
         getVredditVideo()
@@ -66,10 +68,10 @@ export default async function vredditPosts(redditPosts, domain, parsedSub, title
             <div class="container">
                 <div class="identifier">
                     <div class="subreddit_img">
-                        <img class="icon" src="${vreddit.icon}">
+                        <img class="subreddit_icon" src="${vreddit.icon}" alt="subreddit icon">
                     </div>
                     <div class="nameplate">
-                        <span>${vreddit.sub}</span>
+                        <span>${vreddit.sub}</span> <img id="nsfw" src="${vreddit.nsfw}" alt="nsfw">
                     </div>
                 </div>
                 <div class="media_box">
@@ -88,7 +90,7 @@ export default async function vredditPosts(redditPosts, domain, parsedSub, title
                         &#183; 
                         <span class="domain">${vreddit.domain}</span>
                         &#183;
-                        <a class="link" href="${vreddit.link}" target="_blank">Permalink</a>
+                        <a class="link" href="${vreddit.link}" target="_blank" rel="noopener noreferrer nofollow">Permalink</a>
                     </div>
                 </div>    
             </div>      

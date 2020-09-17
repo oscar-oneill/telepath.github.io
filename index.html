@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<title>Telepath for Reddit</title>
 		<meta charset="utf-8">
@@ -9,32 +9,51 @@
 		<link rel="stylesheet" href="./assets/css/style.css">
 		<link rel="icon" href="./assets/images/icons/favicon.png" type="image/png" sizes="48x48">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+		
+		<link rel="preload" href="./assets/css/style.css" as="style">
+		<link rel="preload" href="./assets/js/index.js" as="script">
+		<link rel="preload" href="./assets/js/subreddit-api.js" as="script">
+		<link rel="preload" href="./assets/js/foreign_domains/gfycat.js" as="script">
+		<link rel="preload" href="./assets/js/foreign_domains/redgifs.js" as="script">
+		<link rel="preload" href="./assets/js/foreign_domains/imgur.js" as="script">
+		<link rel="preload" href="./assets/js/foreign_domains/instagram.js" as="script">
+		<link rel="preload" href="./assets/js/foreign_domains/streamable.js" as="script">
+		<link rel="preload" href="./assets/js/reddit_domains/vreddit.js" as="script">
+		<link rel="preload" href="./assets/js/reddit_domains/ireddit.js" as="script">
+	
 	</head>
 	<body>
 		<div class="nav_bar">
-			<a href="./index.html">
-				<span class="site_title">Telepath</span>
-				<img class="icon" src="./assets/images/icons/reddit-logo.png"></img>
+			<a class="site_title" href="./index.html">
+				Telepath
+				<img class="icon" src="./assets/images/icons/reddit-logo.png" alt="reddit logo">
 			</a>
 			
 			<div class="prefix">r/</div>
 
 			<form class="search_form">
-				<input type="text" class="search_input" placeholder="subreddit search" value="">
+				<label for="search">
+					<input id="search" type="text" class="search_input" placeholder="subreddit search" value="">
+				</label>
 
-				<select name="type" class="sort_type">
-					<option value="new">New</option>
-					<option selected value="hot">Hot</option>
-					<option value="rising">Rising</option>
-				</select>
+				<label for="type">
+					<select id="type" name="type" class="sort_type">
+						<option value="new">New</option>
+						<option selected value="hot">Hot</option>
+						<option value="rising">Rising</option>
+					</select>
+				</label>
 
-				<select name="limit" class="limit">
-					<option value="5">5</option>
-					<option value="10">10</option>
-					<option selected value="25">25</option>
-					<option value="40">40</option>
-					<option value="100">100</option>
-				</select>
+				<label for="limit">
+					<select id="limit" name="limit" class="limit">
+						<option value="5">5</option>
+						<option value="10">10</option>
+						<option selected value="25">25</option>
+						<option value="40">40</option>
+						<option value="100">100</option>
+					</select>
+				</label>
+
 				<button type="submit" id="submit">Search</button>
 			</form>
 

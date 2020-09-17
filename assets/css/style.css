@@ -17,8 +17,8 @@
 }
 
 body {
-	background: black;
-	color: white;
+	background: #000000;
+	color: #ffffff;
 	font-family: 'Programme';
 }
 
@@ -30,7 +30,7 @@ body {
 /* Navigation Bar */
 a {
     text-decoration: none;
-    color: black;
+    color: #000000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -38,18 +38,18 @@ a {
 
 h6 {
 	font-weight: normal;
-	color: orangered;
+	color: #ff4500;
 	font-style: oblique;
 }
 
 .nav_bar {
 	height: 60px;
 	min-width: 100%;
-	background: black;
+	background: #000000;
 	display: flex;
 	align-items: center;
 	text-align: center;
-	justify-content: left;
+	justify-content: center;
 	position: fixed;
 	z-index: 1;
 	letter-spacing: -.4px;
@@ -58,8 +58,7 @@ h6 {
 
 .site_title {
 	font-size: 20px;
-	margin: 0px 5px 0px 10px;
-	color: white;
+	color: #ffffff;
 }
 
 .icon {
@@ -69,6 +68,7 @@ h6 {
 	padding-right: 10px;
 	background: transparent;
 	object-fit: contain;
+	margin-left: 5px;
 }
 
 .prefix {
@@ -78,7 +78,7 @@ h6 {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: black;
+	color: #000000;
 }
 
 .search_form {
@@ -91,28 +91,28 @@ h6 {
 input {
 	position: relative;
 	outline: none;
-	border: 1px solid ghostwhite;
+	border: 1px solid #f8f8ff;
 	height: 35px;
 	width: 45vw;
 	font-size: 13px;
 	font-family: 'Programme';
-	background: aliceblue;
+	background: #f0f8ff;
 	padding-left: 3px;
 	border-radius: 0;
 	
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: black;
+  color: #000000;
   opacity: 1; /* Firefox */
 }
 
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: black;
+  color: #000000;
 }
 
 ::-ms-input-placeholder { /* Microsoft Edge */
-  color: black;
+  color: #000000;
 }
 
 .sort_type {
@@ -161,7 +161,7 @@ button {
 	outline: none;
 	position: relative;
 	background: transparent;
-	color: white;
+	color: #ffffff;
 }
 
 /* Rendered Media */
@@ -184,7 +184,7 @@ button {
 .identifier {
     height: 50px;
     width: 425px;
-    background: black;
+    background: #000000;
     display: flex;
     align-items: center;
 }
@@ -194,13 +194,15 @@ button {
     width: 35px;
     background: transparent;
     border-radius: 50%;
-    margin-left: 10px;
+	margin-left: 10px;
+	object-fit: contain;
 }
 
-.icon {
+.subreddit_icon {
     height: 35px;
     width: 35px;
-    border-radius: 50%;
+	border-radius: 50%;
+	object-fit: contain;
 }
 
 .nameplate {
@@ -213,7 +215,14 @@ button {
     display: flex;
     justify-content: center;
 	align-items: center;
-	color: white;
+	color: #ffffff;
+}
+
+#nsfw {
+	height: 35px;
+	width: 35px;
+	object-fit: contain;
+	margin-left: 5px;
 }
 
 .media_box {
@@ -231,7 +240,7 @@ button {
 .media {
     height: 100%;
     width: 100%;
-    background: black;
+    background: #000000;
     border: none;
     outline: none;
 }
@@ -239,8 +248,8 @@ button {
 .activity {
     height: auto;
     width: 425px;
-	background: black;
-	color: white;
+	background: #000000;
+	color: #ffffff;
     display: inline-block;
 	align-items: center;
     font-size: 12px;
@@ -277,7 +286,7 @@ button {
 }
 
 .post_title {
-	color: white;
+	color: #ffffff;
 }
 
 .date_box {

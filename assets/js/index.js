@@ -82,7 +82,7 @@ function vredditImage(vreddit) {
         <div class="container">
             <div class="identifier">
                 <div class="subreddit_img">
-                    <img class="icon" src="${vreddit.icon}">
+                    <img class="subreddit_icon" src="${vreddit.icon}" alt="subreddit icon">
                 </div>
                 <div class="nameplate">
                     <span>${vreddit.sub}</span>
