@@ -1,9 +1,9 @@
-export default async function iredditPosts (redditPosts, domain, parsedSub, title, upvotes, author, convertedDate, flair, media, reddit, postUrl) {
+export default async function ireddit(domain, subreddit, url, title, upvotes, author, convertedDate, flair, media, inputRequest) {
     let imageList = document.querySelector(".objects");
 
-    if (domain == "i.redd.it" && postUrl.includes("gif")) {
+    if (domain == "i.redd.it" && url.includes("gif")) {
         async function getPicture() {
-            const response = await fetch(`https://api.reddit.com/r/${reddit}/about`);
+            const response = await fetch(`https://api.reddit.com/r/${inputRequest}/about`);
             const _data = await response.json();
 
             let icon = _data.data.icon_img ? _data.data.icon_img : _data.data.community_icon ? _data.data.community_icon : _data.data.header_img ? _data.data.header_img : 'https://www.interactive.org/images/games_developers/no_image_available_sm.jpg';
@@ -12,7 +12,7 @@ export default async function iredditPosts (redditPosts, domain, parsedSub, titl
             let ireddit = {
                 image: media.url,
                 title: title,
-                sub: parsedSub,
+                sub: subreddit,
                 ups: upvotes,
                 author: author,
                 domain: domain,
@@ -33,10 +33,15 @@ export default async function iredditPosts (redditPosts, domain, parsedSub, titl
                 <div class="container">
                     <div class="identifier">
                         <div class="subreddit_img">
-                            <img class="subreddit_icon" src="${ireddit.icon}" alt="subreddit icon">
+                            <a href="/subreddit/${inputRequest}">
+                                <img class="subreddit_icon" src="${ireddit.icon}" alt="subreddit icon">
+                            </a>
                         </div>
                         <div class="nameplate">
-                            <span>${ireddit.sub}</span>
+                            <div><a href="/subreddit/${inputRequest}">${ireddit.sub}</a></div>
+                            <div class="user_domain">
+                                <a href="/user/${ireddit.author}"><span class="user">u/${ireddit.author}</span></a> &#183; <span class="domain">${ireddit.domain}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="media_box">
@@ -45,13 +50,10 @@ export default async function iredditPosts (redditPosts, domain, parsedSub, titl
                     <div class="activity">
                             <i class="fas fa-heart like_btn"></i><span class="likes">${ireddit.ups} Likes</span> <br>
                             <div class="data_box">
-                                <span class="user">u/${ireddit.author}</span> 
                                 <span class="post_title">${ireddit.title}</span>
                             </div>
                             <div class="date_box">
                                 <span class="date">${ireddit.date}</span> 
-                                &#183; 
-                                <span class="domain">${ireddit.domain}</span>
                                 &#183; 
                                 <a class="link" href="${ireddit.link}" target="_blank" rel="noopener noreferrer nofollow">Permalink</a>
                             </div>
@@ -61,4 +63,4 @@ export default async function iredditPosts (redditPosts, domain, parsedSub, titl
     }
 }
 
-iredditPosts()
+ireddit()

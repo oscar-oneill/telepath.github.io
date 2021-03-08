@@ -1,13 +1,14 @@
-export default async function streamablePosts(domain, parsedSub, postUrl, title, upvotes, author, convertedDate, flair, media, reddit){
+export default async function streamable(domain, subreddit, url, title, upvotes, author, convertedDate, flair, media, inputRequest){
     let imageList = document.querySelector('.objects');
+
         if (domain == 'streamable.com') {
             async function getStreamableData() {
-                let streamableID = postUrl.replace("https://streamable.com/", "");
+                let streamableID = url.replace("https://streamable.com/", "");
 
                 const streamableData = await fetch(`https://api.streamable.com/videos/${streamableID}`);
                 const data = await streamableData.json();
 
-                const response = await fetch(`https://api.reddit.com/r/${reddit}/about`);
+                const response = await fetch(`https://api.reddit.com/r/${inputRequest}/about`);
                 const _data = await response.json();
 
                 let i = 0;
@@ -19,7 +20,7 @@ export default async function streamablePosts(domain, parsedSub, postUrl, title,
 
                 let streamable = {
                     title: title,
-                    sub: parsedSub,
+                    sub: subreddit,
                     author: author,
                     ups: upvotes,
                     video: video,
@@ -41,28 +42,30 @@ export default async function streamablePosts(domain, parsedSub, postUrl, title,
                 <div class="container">
                     <div class="identifier">
                         <div class="subreddit_img">
-                            <img class="subreddit_icon" src="${streamable.icon}" alt="subreddit icon">
+                            <a href="/subreddit/${inputRequest}">
+                                <img class="subreddit_icon" src="${streamable.icon}" alt="subreddit icon">
+                            </a>
                         </div>
                         <div class="nameplate">
-                            <span>${streamable.sub}</span>
+                            <div><a href="/subreddit/${inputRequest}">${streamable.sub}</a></div>
+                            <div class="user_domain">
+                                <a href="/user/${streamable.author}"><span class="user">u/${streamable.author}</span></a> &#183; <span class="domain">${streamable.domain}</span>
+                            </div>
                         </div>
                     </div>
                     <div class="media_box">
-                        <video class="media" preload="none" controls muted poster="${streamable.poster}">
+                        <video class="visual_media" preload="none" playsinline controls muted poster="${streamable.poster}">
                              <source src="${streamable.video}" type="video/mp4">
                         </video>
                     </div>
                     <div class="activity">
                         <i class="fas fa-heart like_btn"></i> <span class="likes">${streamable.ups} Likes</span><br>
                         <div class="data_box">
-                            <span class="user">u/${streamable.author}</span> 
                             <span class="post_title">${streamable.title}</span>
                         </div>
                         <div class="date_box">
                             <span class="date">${streamable.date}</span> 
                             &#183; 
-                            <span class="domain">${streamable.domain}</span>
-                            &#183;
                             <a class="link" href="${streamable.link}" target="_blank" rel="noopener noreferrer nofollow">Permalink</a>
                         </div>
                     </div>
@@ -70,3 +73,5 @@ export default async function streamablePosts(domain, parsedSub, postUrl, title,
                     `;
     }
 }
+
+streamable()
