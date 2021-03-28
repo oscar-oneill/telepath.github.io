@@ -21,7 +21,7 @@ var otherRequester = new snoowrap({
 
 // Landing Page Data Stream
 app.get('/data', async (req, res) => {
-    await otherRequester.getSubreddit("all").getHot({ limit: 30 })
+    await otherRequester.getSubreddit("all").getHot({ limit: 35 })
     .then(toJson)
     .then(json => {
         res.status(200).send(json)
@@ -40,9 +40,8 @@ app.get('/subreddit/:subreddit', (req, res) => {
 app.post('/subreddit', (req, res) => {
     const subreddit = req.body.queryString.pathname.toString();
     const sub = subreddit.slice(11);
-    console.log(sub);
 
-    otherRequester.getSubreddit(sub).getNew({ limit: 30 })
+    otherRequester.getSubreddit(sub).getNew({ limit: 35 })
     .then(toJson)
     .then(json => { 
         res.status(200).send(json)
@@ -63,7 +62,7 @@ app.post('/redditor', (req, res) => {
     const user = username.slice(6);
     console.log(user);
 
-    otherRequester.getUser(user).getSubmissions({ limit: 30 })
+    otherRequester.getUser(user).getSubmissions({ limit: 35 })
     .then(toJson)
     .then(json => { 
         res.status(200).send(json)

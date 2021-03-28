@@ -1,6 +1,6 @@
 {
   "name": "telepath-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "View gifs & videos from reddit.",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,11 @@
     "snoowrap": "^1.21.0"
   },
   "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-uglify-es": "^2.0.0",
     "nodemon": "^2.0.4"
   }
 }
