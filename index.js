@@ -73,6 +73,8 @@ app.post('/redditor', (req, res) => {
     })
 });
 
+exports.app = functions.https.onRequest(app);
+
 app.listen(port, () => {
     console.log(`Listening on http://localhost:${port}`);
 });
