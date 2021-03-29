@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    
+    <link id="favicon" rel="icon" href="" type="image/jpeg" sizes="16x16">
+    <meta name="description" content="This is where you can find the latest posts for a subreddit in gif or mp4 format.">
+
+</head>
+
+<body>
+
+    <div class="nav_bar">
+        <a href="/">
+            <span class="site_title">Telepath</span>
+            <img class="icon" src="../images/Reddit-logo.png" alt="reddit logo">
+        </a>
+
+        <form class="form" id="form" action="/">
+            <div class="prefix">r/</div>
+
+            <label for="search">
+                <input id="search" type="text" class="input-request" placeholder="subreddit search" value="" required>
+            </label>
+
+            <button type="submit" id="submit">Search</button>
+        </form>
+
+    </div>
+
+    <div class="objects"></div>
+
+    <script type="module" src="../js/subreddit.js"></script>
+
+</body>
+
+</html>

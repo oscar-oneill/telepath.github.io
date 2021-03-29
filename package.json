@@ -1,0 +1,32 @@
+{
+  "name": "telepath-node",
+  "version": "1.0.1",
+  "description": "View gifs & videos from reddit.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "Telepath",
+    "Reddit",
+    "gifs",
+    "videos"
+  ],
+  "author": "Oscar O'Neill",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "snoowrap": "^1.21.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-uglify-es": "^2.0.0",
+    "nodemon": "^2.0.4"
+  }
+}
